@@ -1,0 +1,68 @@
+{
+  "lista1": [
+    {
+      "id": 1,
+      "img": "imgs/Pcs/Pc_gamer_1.png",
+      "nombre": "producto1",
+      "precio": 10.99
+    },
+    {
+      "id": 2,
+      "img": "imgs/Pcs/Pc_gamer_1.png",
+      "nombre": "producto2",
+      "precio": 20.99
+    },
+    {
+      "id": 3,
+      "img": "imgs/Pcs/Pc_gamer_1.png",
+      "nombre": "producto3",
+      "precio": 30.99
+    },
+    {
+      "id": 4,
+      "img": "imgs/Pcs/Pc_gamer_1.png",
+      "nombre": "producto4",
+      "precio": 50
+    }
+  ],
+  "lista2": [
+    {
+      "id": 5,
+      "img": "imgs/procesadores/ryzen7.webp",
+      "nombre": "producto4",
+      "precio": 40.99
+    },
+    {
+      "id": 6,
+      "img": "imgs/procesadores/ryzen7.webp",
+      "nombre": "producto5",
+      "precio": 50.99
+    },
+    {
+      "id": 7,
+      "img": "imgs/procesadores/ryzen7.webp",
+      "nombre": "producto6",
+      "precio": 60.99
+    }
+  ],
+  "lista3": [
+    {
+      "id": 8,
+      "img": "imgs/mothers/mother-gigabyte-z690-aorus-ultra-ddr5-s1700-0.jpg",
+      "nombre": "producto4",
+      "precio": 40.99
+    },
+    {
+      "id": 9,
+      "img": "imgs/mothers/mother-gigabyte-z690-aorus-ultra-ddr5-s1700-0.jpg",
+      "nombre": "producto5",
+      "precio": 50.99
+    },
+    {
+      "id": 10,
+      "img": "imgs/mothers/mother-gigabyte-z690-aorus-ultra-ddr5-s1700-0.jpg",
+      "nombre": "producto6",
+      "precio": 60.99
+    }
+  ]
+}
