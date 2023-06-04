@@ -383,6 +383,7 @@ function borrar_carrito() {
 var primera_vez = true;
 function mostrar_carrito() {
   borrar_carrito();
+  quitar_titulo();
   if (primera_vez) {
     lista_mostrar = crear_lista_objetos_con_cantidad(obtener_carrito_sesion());
     primera_vez = false;
@@ -424,6 +425,11 @@ function titulo_productos(nombre_categoria_productos) {
     total.innerText = `${nombre_categoria_productos}`;
   }
   actualizar_animacion_titulo();
+}
+
+function quitar_titulo() {
+  const total = document.getElementById("titulo_productos");
+  total.innerText = "";
 }
 
 //NUEVO
