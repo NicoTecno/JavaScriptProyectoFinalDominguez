@@ -5,21 +5,27 @@ var nombre_lista_actual_json;
 var lista_productos_con_sus_cantidades = [];
 var valor_total_compra = 0;
 //CONSATNTES GLOBALES DE LISTA DE CADA TIPO DE PRODUCTO DEL JSON
-const JSON_PC_ARMADAS = "";
+const JSON_PC_ARMADAS = "lista_pc_armadas";
 //LISTAS OPCIONES AHRDWARE
-const JSON_PROCESADORES = "";
-const JSON_MOTHERS = "";
-const JSON_ALMACENAMIENTO = "";
-const JSON_MEMORIAS_RAM = "";
-const JSON_FUENTES = "";
+const JSON_PROCESADORES = "lista_procesadores";
+const JSON_MOTHERS = "lista_mothers";
+const JSON_ALMACENAMIENTO = "lista_almacenamiento";
+const JSON_MEMORIAS_RAM = "lista_memorias_ram";
+const JSON_FUENTES = "Fuentes";
 //LISTAS OPCIONES PERIFERIOS
-const JSON_TECLADOS = "";
-const JSON_MOUSES = "";
-const JSON_MONITORES = "";
-const JSON_AUICULARES = "";
+const JSON_TECLADOS = "Teclados";
+const JSON_MOUSES = "Mouses";
+const JSON_MONITORES = "Monitores";
+const JSON_AUICULARES = "Auriculares";
 //estas variables y copnstante son para ARMA TU PC
-const nombres_lista_Hardware_para_armar_tu_pc = ["lista2", "lista3"];
-const cantidad_productos_hardaware = 2;
+const nombres_lista_Hardware_para_armar_tu_pc = [
+  JSON_PROCESADORES,
+  JSON_MOTHERS,
+  JSON_ALMACENAMIENTO,
+  JSON_MEMORIAS_RAM,
+  JSON_FUENTES,
+];
+const cantidad_productos_hardaware = 5;
 var posicion_lista_actual_arma_tu_pc = 0;
 var estoy_en_arma_tu_pc = false;
 var lista_componentes_elegidos = [];
@@ -28,23 +34,17 @@ var lista_componentes_elegidos = [];
 fetch("productos.json")
   .then((response) => response.json())
   .then((data) => {
-    console.log("FECTH");
     constante_global_data = data;
-    console.log(constante_global_data);
   });
 
 function resetear_armar_tu_pc() {
   posicion_lista_actual_arma_tu_pc = 0;
   lista_componentes_elegidos = [];
-  console.log("LISTA COMPONENTES ELEGIDO RESET");
-  console.log(lista_componentes_elegidos);
   string_para_html_alerta = "";
 }
 
 const listaProductos = document.querySelector("#productos");
 function generar_productos(data) {
-  // let lista1 = data;
-  // titulo_productos();
   data.forEach(function (elemento) {
     const div = document.createElement("div");
     const imgElement = document.createElement("img");
@@ -81,49 +81,42 @@ function cargar_data() {
   fetch("productos.json")
     .then((response) => response.json())
     .then((data) => {
-      console.log("FECTH");
       constante_global_data = data;
-      console.log(constante_global_data);
     });
 }
 
 function lista_correspondiente_para_ese_navlink(nombre_navlink) {
-  // console.log("PREGUNTAAAAAAAAAA");
-  // if (nombre_navlink == "Pcs Armadas") {
-  //   console.log("LISTA PC ARMADAS");
-  // }
   var string_nombre_lista_json;
   switch (nombre_navlink) {
     case "Pcs Armadas":
-      console.log("SWITCHHHH");
-      string_nombre_lista_json = "lista1";
+      string_nombre_lista_json = JSON_PC_ARMADAS;
       break;
     case "Procesadores":
-      string_nombre_lista_json = "lista2";
+      string_nombre_lista_json = JSON_PROCESADORES;
       break;
     case "Mothers":
-      string_nombre_lista_json = "lista2";
+      string_nombre_lista_json = JSON_MOTHERS;
       break;
     case "Almacenamiento":
-      string_nombre_lista_json = "lista2";
+      string_nombre_lista_json = JSON_ALMACENAMIENTO;
       break;
     case "Memorias Ram":
-      string_nombre_lista_json = "lista2";
+      string_nombre_lista_json = JSON_MEMORIAS_RAM;
       break;
     case "Fuentes":
-      string_nombre_lista_json = "lista2";
+      string_nombre_lista_json = JSON_FUENTES;
       break;
     case "Teclados":
-      string_nombre_lista_json = "lista2";
+      string_nombre_lista_json = JSON_TECLADOS;
       break;
     case "Mouses":
-      string_nombre_lista_json = "lista2";
+      string_nombre_lista_json = JSON_MOUSES;
       break;
     case "Monitores":
-      string_nombre_lista_json = "lista2";
+      string_nombre_lista_json = JSON_MONITORES;
       break;
     case "Auriculares":
-      string_nombre_lista_json = "lista2";
+      string_nombre_lista_json = JSON_AUICULARES;
       break;
   }
   return string_nombre_lista_json;
@@ -166,10 +159,9 @@ subNavLinks.forEach(function (navLink) {
     div_productos_div_carrito = true;
     resetear_armar_tu_pc();
 
-    cambiar_vista_carrito_con_navbar(); //NUEVOO
+    cambiar_vista_carrito_con_navbar();
     var selectedText = this.innerHTML;
     titulo_productos(selectedText);
-    // cargar_data();
     var lista_del_json = lista_correspondiente_para_ese_navlink(selectedText);
     nombre_lista_actual_json = constante_global_data[lista_del_json];
     eliminar_productos();
@@ -231,9 +223,6 @@ slider_min.forEach((input) => {
 
 //Filtro precio
 function filtrar_por_precio(lista_productos_buscada) {
-  console.log("ENTRO EN FILTRAR PRECIO");
-  console.log(lista_productos_buscada);
-
   let minVal = parseInt(priceInput[0].value);
   let maxVal = parseInt(priceInput[1].value);
   const nuevo_array = lista_productos_buscada.filter(function (elemento) {
@@ -258,9 +247,7 @@ priceInput[1].addEventListener("input", function () {
 //Local Storage
 
 function guardar_sesion(lista_carrito) {
-  console.log("ESTOY POR GUARDAR al carrito");
   const jsonDeListaCarrito = JSON.stringify(lista_carrito);
-  console.log(jsonDeListaCarrito);
   localStorage.setItem("ListaCarrito", jsonDeListaCarrito);
 }
 
@@ -283,10 +270,6 @@ listaProductos.addEventListener("click", function (event) {
   if (event.target.classList.contains("add-to-cart")) {
     const idProducto = event.target.dataset.productoId;
 
-    console.log("Productos acruales es");
-    console.log(productos_actuales);
-    console.log("VOY A USAR LA LISTA nombre_lista_actual_json");
-    console.log(nombre_lista_actual_json);
     alerta_producto_agregar_carrito();
     var producto_encontrado = buscar_producto_por_id(
       nombre_lista_actual_json,
@@ -333,8 +316,9 @@ function actualizar_total() {
       valor_total_compra += producto.precio;
     });
   }
+  let total_dos_decimales = valor_total_compra.toFixed(2);
   const total = document.getElementById("total");
-  total.innerText = `${valor_total_compra}`;
+  total.innerText = `${total_dos_decimales}`;
 }
 
 //PASAR A LA SECCION DE COMPRA (OCULTO EL CONTEINER DE LOS PRODUCTOS Y FILTROS)
@@ -392,7 +376,6 @@ function mostrar_carrito() {
     lista_mostrar = crear_lista_objetos_con_cantidad(obtener_carrito_sesion());
   }
 
-  //NUEVO
   lista_mostrar.forEach(function (elemento) {
     const div = document.createElement("div");
     const imgElement = document.createElement("img");
@@ -411,14 +394,8 @@ var div_carrito = document.querySelector("#carrito");
 var contenedor = document.querySelector(".contenedor__productos");
 
 function titulo_productos(nombre_categoria_productos) {
-  // const div = document.createElement("div");
-  // div.innerHTML = `
-  //   <h3>Eligir procesador</h3>
-  //   `;
-  // div_productos_y_filtro.append(div);
   var lista_productos_orden = ["Procesador", "Mother"];
   const total = document.getElementById("titulo_productos");
-  // var a = "HOLAAA";
   if (estoy_en_arma_tu_pc) {
     total.innerText = `Elija un ${lista_productos_orden[posicion_lista_actual_arma_tu_pc]}`;
   } else {
@@ -432,7 +409,6 @@ function quitar_titulo() {
   total.innerText = "";
 }
 
-//NUEVO
 var div_inicio = document.querySelector("#Inicio");
 var div_productos_y_filtro = document.querySelector("#Seccion_productos");
 
@@ -448,7 +424,6 @@ function mostrar_inicio() {
 }
 
 mostrar_inicio();
-//FIN NUEVO
 
 var contador_prueba = 0;
 //Esto es para que el carrito tenga display none desde que carga la pagina
@@ -464,18 +439,14 @@ function vista_carrito() {
 
   if (div_productos_div_carrito) {
     if (contador_prueba % 2 == 0) {
-      // obtener_carrito_sesion();
       contenedor.style.display = "none";
-      // div_carrito.style.visibility = "visible";
       div_carrito.style.display = "";
     } else {
       contenedor.style.display = "";
-      // div_carrito.style.visibility = "hidden";
       div_carrito.style.display = "none";
     }
     contador_prueba++;
     contador_2 = 0;
-    // div_productos_div_carrito = false;
   } else {
     //CASO CONTRARIO ES INICIO_CARRITO
     if (contador_2 % 2 == 0) {
@@ -488,24 +459,13 @@ function vista_carrito() {
       div_carrito.style.display = "none";
     }
     contador_2++;
-    // contador_prueba = 0;
   }
 
   mostrar_carrito();
 }
 
-//Esta funcion llama a visita_carrito si estoy en carrito de compras
-// y quiero seleccionar un elemento del Navbar
-// function cambiar_vista_carrito_con_navbar() {
-//   if (contador_prueba % 2 != 0) {
-//     vista_carrito();
-//   }
-// }
-
-//NUEVO
 function cambiar_vista_carrito_con_navbar() {
   contenedor.style.display = "";
-  // div_carrito.style.visibility = "hidden";
   div_carrito.style.display = "none";
   contador_prueba++;
 }
@@ -514,49 +474,23 @@ function alerta_producto_agregar_carrito() {
   Toastify({
     text: "El producto se agregó al carrito",
     duration: 3000,
-    // destination: "https://github.com/apvarun/toastify-js",
     newWindow: true,
-    // close: true,
-    gravity: "bottom", // `top` or `bottom`
-    position: "right", // `left`, `center` or `right`
-    stopOnFocus: true, // Prevents dismissing of toast on hover
+    gravity: "bottom",
+    position: "right",
+    stopOnFocus: true,
     style: {
       background: "linear-gradient(to right, #00b09b, #96c93d)",
     },
-    onClick: function () {}, // Callback after click
   }).showToast();
 }
 
 function arma_tu_pc() {
-  // var estoy_en_arma_tu_pc = true;
-  //Si agrego un elemento avanzo en la lista
-  console.log("ESTOY EN ARMA TU PC");
   var nombre_lista_actual =
     nombres_lista_Hardware_para_armar_tu_pc[posicion_lista_actual_arma_tu_pc];
 
   nombre_lista_actual_json = constante_global_data[nombre_lista_actual];
   filtrar_por_precio(constante_global_data[nombre_lista_actual]);
 }
-//voy a tener que ir lista por lista del json y agregar un item d cada lista
-
-// console.log("ESTOY EN ARMAR PC");
-// console.log(constante_global_data);
-// for (let lista in constante_global_data) {
-//   console.log("PRINTEO LISTA DEL JSON");
-//   console.log(lista);
-//   constante_global_data[lista].forEach(function (elemento) {
-//     console.log("MUESTRO ELMENTO DE ESA LISTA");
-//     console.log(elemento);
-//   });
-// }
-// constante_global_data.forEach(function (elemento) {
-// console.log(elemento);
-// });
-
-// nombre_lista_actual_json = constante_global_data[lista_del_json];
-// eliminar_productos();
-// filtrar_por_precio(nombre_lista_actual_json);
-// }
 
 //ESTA PARTE ES PARA INICIAR SESION O REGISTRARSE
 function iniciar_sesion() {
@@ -591,7 +525,7 @@ function iniciar_sesion() {
         timerProgressBar: true,
         showConfirmButton: false,
       }).then(() => {
-        window.location.href = "inicio.html"; // Redirigir a la página de inicio
+        window.location.href = "#";
       });
     } else {
       Swal.fire({
@@ -639,38 +573,12 @@ function iniciar_sesion() {
           timerProgressBar: true,
           showConfirmButton: false,
         }).then(() => {
-          window.location.href = "inicio.html"; // Redirigir a la página de inicio
+          window.location.href = "#";
         });
       }
     });
   });
 }
-
-// function alerta_fin_arma_tu_pc() {
-//   const imgSrc = "https://picsum.photos/100/100";
-//   const nombreProducto = "Nombre del producto";
-//   const precioProducto = "Precio del producto";
-
-//   const contenidoHTML = `
-//       <img src="${imgSrc}" alt="Imagen del producto" style="width: 50px; height: 50px;">
-//       <p>${nombreProducto}</p>
-//       <p>${precioProducto}</p>
-//     `;
-
-//   swal({
-//     title: "Confirmación de compra",
-//     html: contenidoHTML,
-//     icon: "info",
-//     buttons: ["Cancelar", "Comprar"],
-//   }).then((comprar) => {
-//     if (comprar) {
-//       // Acción al presionar el botón "Comprar"
-
-//     } else {
-//     // Acción al presionar el botón "Cancelar" o cerrar la alerta
-//     }
-//   });
-// }
 
 var string_para_html_alerta = "";
 function armar_html_para_alerta() {
@@ -679,16 +587,6 @@ function armar_html_para_alerta() {
     posicion_lista_componentes_elegidos <= 1;
     posicion_lista_componentes_elegidos++
   ) {
-    // const imgSrc = "https://picsum.photos/100/100";
-    // const nombreProducto = "Nombre del producto";
-    // const precioProducto = "Precio del producto";
-
-    // const contenidoHTML = `
-    //     <img src="${imgSrc}" alt="Imagen del producto" style="width: 50px; height: 50px;">
-    //     <p>${nombreProducto}</p>
-    //     <p>${precioProducto}</p>
-    //   `;
-
     var producto =
       lista_componentes_elegidos[posicion_lista_componentes_elegidos];
 
@@ -711,43 +609,11 @@ function armar_html_para_alerta() {
 }
 
 function alerta_fin_arma_tu_pc() {
-  // const imgSrc = "https://picsum.photos/100/100";
-  // const nombreProducto = "Nombre del producto";
-  // const precioProducto = "Precio del producto";
-
-  // const contenidoHTML = `
-  //     <img src="${imgSrc}" alt="Imagen del producto" style="width: 50px; height: 50px;">
-  //     <p>${nombreProducto}</p>
-  //     <p>${precioProducto}</p>
-  //   `;
-
-  //   const contenidoHTML = `
-  //   <div class="contenedor_de_alerta_arma_tu_pc">
-  //     <img src="${imgSrc}" alt="Imagen del producto" style="width: 50px; height: 50px;">
-  //     <p>${nombreProducto}</p>
-  //     <p>${precioProducto}</p>
-  //   </div>
-  // `;
-
-  console.log("ANTES DEL FORRRRR");
   for (
     let posicion_lista_componentes_elegidos = 0;
-    posicion_lista_componentes_elegidos <= 1;
+    posicion_lista_componentes_elegidos <= cantidad_productos_hardaware - 1;
     posicion_lista_componentes_elegidos++
   ) {
-    // const imgSrc = "https://picsum.photos/100/100";
-    // const nombreProducto = "Nombre del producto";
-    // const precioProducto = "Precio del producto";
-
-    // const contenidoHTML = `
-    //     <img src="${imgSrc}" alt="Imagen del producto" style="width: 50px; height: 50px;">
-    //     <p>${nombreProducto}</p>
-    //     <p>${precioProducto}</p>
-    //   `;
-    console.log("DENTRO DEL FOR");
-
-    console.log("LISTA COMPONENTES elegidos");
-    console.log(lista_componentes_elegidos);
     var producto =
       lista_componentes_elegidos[posicion_lista_componentes_elegidos];
 
