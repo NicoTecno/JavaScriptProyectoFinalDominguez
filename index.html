@@ -43,6 +43,10 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css"
+    />
   </head>
   <body>
     <header>
@@ -68,18 +72,29 @@
             </button>
           </form>
           <div>
-            <img
+            <i
+              class="fas fa-shopping-cart"
+              id="tamanio_carrito"
+              onclick="vista_carrito()"
+            ></i>
+
+            <!-- <img
               src="../imgs/iconos/carrito-de-compras.png"
               id="tamanio_carrito"
               onclick="vista_carrito()"
               alt=""
-            />
-            <img
+            /> -->
+            <i
+              class="fas fa-user"
+              id="tamanio_usuario"
+              onclick="iniciar_sesion()"
+            ></i>
+            <!-- <img
               src="../imgs/iconos/bxs-user-rectangle.svg"
               id="tamanio_usuario"
               alt=""
               onclick="iniciar_sesion()"
-            />
+            /> -->
           </div>
           <!-- </div> -->
         </div>

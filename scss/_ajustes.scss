@@ -31,7 +31,6 @@
   border-radius: 2rem;
   color: aliceblue;
   text-justify: distribute;
-  //   margin-left: 3rem;
 }
 
 @media (max-width: 575px) {
@@ -70,25 +69,21 @@
   color: white;
 }
 
-#tamanio_carrito {
-  width: 60px;
-  height: 60px;
-  // background-color: white;
-  // color: aliceblue;
+.fas.fa-shopping-cart {
+  color: white;
+  font-size: 3rem;
+  margin-right: 2rem;
 }
-
-//NUEVO
 
 .img_producto_carrito {
   width: 60px;
   height: 60px;
 }
 
-#tamanio_usuario {
-  width: 60px;
-  height: 60px;
-  background-color: white;
-  margin-left: 1rem;
+.fas.fa-user {
+  color: white;
+  font-size: 3rem;
+  margin-right: 1rem;
 }
 
 //para una alerta

@@ -264,9 +264,10 @@
   color: white;
 }
 
-#tamanio_carrito {
-  width: 60px;
-  height: 60px;
+.fas.fa-shopping-cart {
+  color: white;
+  font-size: 3rem;
+  margin-right: 2rem;
 }
 
 .img_producto_carrito {
@@ -274,11 +275,10 @@
   height: 60px;
 }
 
-#tamanio_usuario {
-  width: 60px;
-  height: 60px;
-  background-color: white;
-  margin-left: 1rem;
+.fas.fa-user {
+  color: white;
+  font-size: 3rem;
+  margin-right: 1rem;
 }
 
 .contenedor_de_alerta_arma_tu_pc {
