@@ -703,7 +703,7 @@ function alerta_fin_arma_tu_pc() {
   //////////////////////////////
   // function mostrarAlerta() {
   Swal.fire({
-    title: "¿Qué desea hacer?",
+    title: "Esta es su Pc Armada",
     html: string_para_html_alerta,
     customClass: {
       container: "alerta_arma_tu_pc_finalizada",
