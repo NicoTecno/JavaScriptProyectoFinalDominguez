@@ -4,25 +4,25 @@
       "id": 1,
       "img": "imgs/Pcs/Pc_gamer_1.png",
       "nombre": "Pc1",
-      "precio": 10.99
+      "precio": 100000
     },
     {
       "id": 2,
       "img": "imgs/Pcs/pc_pro_gamer_1.png",
       "nombre": "Pc2",
-      "precio": 20.99
+      "precio": 120000
     },
     {
       "id": 3,
       "img": "imgs/Pcs/pc_pro_gamer_3.png",
       "nombre": "Pc3",
-      "precio": 30.99
+      "precio": 190000
     },
     {
       "id": 4,
       "img": "imgs/Pcs/Pc_gamer_3.webp",
       "nombre": "Pc4",
-      "precio": 50
+      "precio": 150000
     }
   ],
   "lista_procesadores": [
@@ -30,19 +30,19 @@
       "id": 5,
       "img": "imgs/procesadores/ryzen7.webp",
       "nombre": "Procesador1",
-      "precio": 40.99
+      "precio": 75000
     },
     {
       "id": 6,
       "img": "imgs/procesadores/I7.png",
       "nombre": "Procesador2",
-      "precio": 50.99
+      "precio": 80000
     },
     {
       "id": 7,
       "img": "imgs/procesadores/I5.png",
       "nombre": "Procesador3",
-      "precio": 60.99
+      "precio": 40000
     }
   ],
   "lista_mothers": [
@@ -50,19 +50,19 @@
       "id": 8,
       "img": "imgs/mothers/mother-2.png",
       "nombre": "Mother1",
-      "precio": 40.99
+      "precio": 35000
     },
     {
       "id": 9,
       "img": "imgs/mothers/mother-gigabyte-z690-aorus-ultra-ddr5-s1700-0.jpg",
       "nombre": "Mother2",
-      "precio": 50.99
+      "precio": 40000
     },
     {
       "id": 10,
       "img": "imgs/mothers/mother-3.jpg",
       "nombre": "Mother3",
-      "precio": 60.99
+      "precio": 45000
     }
   ],
   "lista_almacenamiento": [
@@ -70,19 +70,19 @@
       "id": 11,
       "img": "imgs/almacenamiento/skyhawk-2tb.png",
       "nombre": "Disco1",
-      "precio": 40.99
+      "precio": 15000
     },
     {
       "id": 12,
       "img": "imgs/almacenamiento/WD.png",
       "nombre": "Disco2",
-      "precio": 50.99
+      "precio": 17000
     },
     {
       "id": 13,
       "img": "imgs/almacenamiento/SH-2.webp",
       "nombre": "Disco3",
-      "precio": 60.99
+      "precio": 20000
     }
   ],
   "lista_memorias_ram": [
@@ -90,19 +90,19 @@
       "id": 14,
       "img": "imgs/ram/generica.jpg",
       "nombre": "Ram1",
-      "precio": 40.99
+      "precio": 15000
     },
     {
       "id": 15,
       "img": "imgs/ram/fury.webp",
       "nombre": "Ram2",
-      "precio": 50.99
+      "precio": 20000
     },
     {
       "id": 16,
       "img": "imgs/ram/xpg.jpg",
       "nombre": "Ram3",
-      "precio": 60.99
+      "precio": 25000
     }
   ],
   "Fuentes": [
@@ -110,19 +110,19 @@
       "id": 17,
       "img": "imgs/fuentes/fuente1.jpg",
       "nombre": "Fuente1",
-      "precio": 40.99
+      "precio": 10000
     },
     {
       "id": 18,
       "img": "imgs/fuentes/fuente2.jpg",
       "nombre": "Fuente2",
-      "precio": 50.99
+      "precio": 12000
     },
     {
       "id": 19,
       "img": "imgs/fuentes/fuente3.jpg",
       "nombre": "Fuente3",
-      "precio": 60.99
+      "precio": 17000
     }
   ],
   "Teclados": [
@@ -130,19 +130,19 @@
       "id": 20,
       "img": "imgs/teclados/teclado_hogareño_1.png",
       "nombre": "Teclado 1",
-      "precio": 40.99
+      "precio": 14000
     },
     {
       "id": 21,
       "img": "imgs/teclados/teclado_gamer_1.png",
       "nombre": "Teclado2",
-      "precio": 50.99
+      "precio": 20000
     },
     {
       "id": 22,
       "img": "imgs/teclados/teclado_gamer_3.png",
       "nombre": "Teclado3",
-      "precio": 60.99
+      "precio": 35000
     }
   ],
   "Mouses": [
@@ -150,19 +150,19 @@
       "id": 23,
       "img": "imgs/mouses/logitech.png",
       "nombre": "Mouse 1",
-      "precio": 40.99
+      "precio": 4000
     },
     {
       "id": 24,
       "img": "imgs/mouses/mouse-trust.png",
       "nombre": "Mouse 2",
-      "precio": 50.99
+      "precio": 7000
     },
     {
       "id": 25,
       "img": "imgs/mouses/logitech-2.png",
       "nombre": "Mouse 3",
-      "precio": 60.99
+      "precio": 9000
     }
   ],
   "Monitores": [
@@ -170,19 +170,19 @@
       "id": 26,
       "img": "imgs/monitores/monitor_hogareño_2.png",
       "nombre": "Monitor 1",
-      "precio": 40.99
+      "precio": 41000
     },
     {
       "id": 27,
       "img": "imgs/monitores/monitor_diseño_2.webp",
       "nombre": "Monitor 2",
-      "precio": 50.99
+      "precio": 60000
     },
     {
       "id": 28,
       "img": "imgs/monitores/monitor_destacado.png",
       "nombre": "Monitor 3",
-      "precio": 60.99
+      "precio": 75000
     }
   ],
   "Auriculares": [
@@ -190,19 +190,19 @@
       "id": 29,
       "img": "imgs/auriculares/hx.png",
       "nombre": "Auricular 1",
-      "precio": 40.99
+      "precio": 16000
     },
     {
       "id": 30,
       "img": "imgs/auriculares/logiech2.webp",
       "nombre": "Auricular 2",
-      "precio": 50.99
+      "precio": 20000
     },
     {
       "id": 31,
       "img": "imgs/auriculares/logitech.png",
       "nombre": "Auricular 3",
-      "precio": 60.99
+      "precio": 35000
     }
   ]
 }

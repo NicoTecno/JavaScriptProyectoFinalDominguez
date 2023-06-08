@@ -29,6 +29,14 @@ const cantidad_productos_hardaware = 5;
 var posicion_lista_actual_arma_tu_pc = 0;
 var estoy_en_arma_tu_pc = false;
 var lista_componentes_elegidos = [];
+//variables vista carrito
+var div_productos_div_carrito = false;
+var contador_2 = 0;
+var contador_prueba = 0;
+//
+var ultimo_titulo = "";
+//
+var la_tarjeta_fue_llamada_desde_carrito = true;
 
 //OBLIGO A CARGAR LA PRIMERA VEZ (ESTO SOLO AYUDA SI SE EMPIEZA DESDE PRODUCTOS.HTML)
 fetch("productos.json")
@@ -36,6 +44,11 @@ fetch("productos.json")
   .then((data) => {
     constante_global_data = data;
   });
+
+function resetear_contadores_vista_carrito() {
+  contador_2 = 0;
+  contador_prueba = 0;
+}
 
 function resetear_armar_tu_pc() {
   posicion_lista_actual_arma_tu_pc = 0;
@@ -61,7 +74,7 @@ function generar_productos(data) {
     <img src="${imgElement.src}" alt="">
     <h3>${elemento.nombre}</h3>
     <p>Description of product 1.</p>
-    <p>${elemento.precio}</p>
+    <p>$${elemento.precio}</p>
     <button class="${nombre_clase_boton}" data-producto-id="${elemento.id}" >${nombre_boton}</button>
     </div>
     `;
@@ -134,15 +147,16 @@ navLinkss.forEach(function (navLink) {
     ocultar_inicio();
     div_productos_div_carrito = true;
     cambiar_vista_carrito_con_navbar();
-    titulo_productos(selectedText);
     resetear_armar_tu_pc();
     estoy_en_arma_tu_pc = false;
+    resetear_contadores_vista_carrito();
     if (selectedText == "Arma tu Pc") {
       estoy_en_arma_tu_pc = true;
       arma_tu_pc();
       titulo_productos(selectedText);
       return;
     }
+    titulo_productos(selectedText);
     cargar_data();
     var lista_del_json = lista_correspondiente_para_ese_navlink(selectedText);
     nombre_lista_actual_json = constante_global_data[lista_del_json];
@@ -158,8 +172,11 @@ subNavLinks.forEach(function (navLink) {
     ocultar_inicio();
     div_productos_div_carrito = true;
     resetear_armar_tu_pc();
-
+    //NUEVO
+    estoy_en_arma_tu_pc = false;
     cambiar_vista_carrito_con_navbar();
+    resetear_contadores_vista_carrito();
+
     var selectedText = this.innerHTML;
     titulo_productos(selectedText);
     var lista_del_json = lista_correspondiente_para_ese_navlink(selectedText);
@@ -216,6 +233,13 @@ rangeInput.forEach((input) => {
 //DETECTAR SI USO EL SLIDER DEL FILTRO DE PRECIOS Y EFECTUAR FILTRO
 const slider_min = document.querySelectorAll(".range-min");
 slider_min.forEach((input) => {
+  input.addEventListener("input", (e) => {
+    filtrar_por_precio(nombre_lista_actual_json);
+  });
+});
+
+const slider_max = document.querySelectorAll(".range-max");
+slider_max.forEach((input) => {
   input.addEventListener("input", (e) => {
     filtrar_por_precio(nombre_lista_actual_json);
   });
@@ -297,7 +321,7 @@ listaProductos.addEventListener("click", function (event) {
       idProducto
     );
     lista_componentes_elegidos.push(producto_encontrado);
-    if (posicion_lista_actual_arma_tu_pc == cantidad_productos_hardaware - 1) {
+    if (posicion_lista_actual_arma_tu_pc >= cantidad_productos_hardaware - 1) {
       alerta_fin_arma_tu_pc();
       return;
     }
@@ -381,7 +405,7 @@ function mostrar_carrito() {
     const imgElement = document.createElement("img");
     imgElement.src = elemento[0].img;
     div.innerHTML = `
-    <li class="carrito__producto"><img src="${imgElement.src}" class="img_producto_carrito"/> <h3>${elemento[0].nombre}</h3><h3>${elemento[0].precio}</h3><h3>x(${elemento[1]})</h3> <button class="button__eliminar" data-producto-id="${elemento[0].id}">
+    <li class="carrito__producto"><img src="${imgElement.src}" class="img_producto_carrito"/> <h3>${elemento[0].nombre}</h3><h3>$${elemento[0].precio}</h3><h3>x(${elemento[1]})</h3> <button class="button__eliminar" data-producto-id="${elemento[0].id}">
     <svg viewBox="0 0 448 512" class="svgIcon__eliminar"><path d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z"></path></svg>
   </button> </li>
     `;
@@ -394,13 +418,20 @@ var div_carrito = document.querySelector("#carrito");
 var contenedor = document.querySelector(".contenedor__productos");
 
 function titulo_productos(nombre_categoria_productos) {
-  var lista_productos_orden = ["Procesador", "Mother"];
-  const total = document.getElementById("titulo_productos");
+  var lista_productos_orden = [
+    "Procesador",
+    "Mother",
+    "Almacenamiento",
+    "Memoria Ram",
+    "Fuente",
+  ];
+  const titulo = document.getElementById("titulo_productos");
   if (estoy_en_arma_tu_pc) {
-    total.innerText = `Elija un ${lista_productos_orden[posicion_lista_actual_arma_tu_pc]}`;
+    titulo.innerText = `Elija ${lista_productos_orden[posicion_lista_actual_arma_tu_pc]}`;
   } else {
-    total.innerText = `${nombre_categoria_productos}`;
+    titulo.innerText = `${nombre_categoria_productos}`;
   }
+  ultimo_titulo = nombre_categoria_productos;
   actualizar_animacion_titulo();
 }
 
@@ -421,29 +452,43 @@ function mostrar_inicio() {
   div_inicio.style.display = "";
   div_productos_y_filtro.style.display = "none";
   div_productos_div_carrito = false;
+  if (!div_productos_div_carrito) {
+    resetear_contadores_vista_carrito();
+  }
+}
+function mostrar_inicio_desde_visita_carrito() {
+  div_inicio.style.display = "";
+  div_productos_y_filtro.style.display = "none";
+  div_productos_div_carrito = false;
 }
 
 mostrar_inicio();
 
-var contador_prueba = 0;
+// var contador_prueba = 0;
 //Esto es para que el carrito tenga display none desde que carga la pagina
-if (contador_prueba == 0) {
+var primera_carga_pagina = true;
+if (primera_carga_pagina) {
   div_carrito.style.display = "none";
+  primera_carga_pagina = false;
 }
 
-var div_productos_div_carrito = false;
-var contador_2 = 0;
-contador_prueba = 1;
+// var div_productos_div_carrito = false;
+// var contador_2 = 0;
+// contador_prueba = 1;
+var quiero_mostrar_ultimo_titulo = false;
 function vista_carrito() {
   actualizar_total();
+  la_tarjeta_fue_llamada_desde_carrito = true;
 
   if (div_productos_div_carrito) {
     if (contador_prueba % 2 == 0) {
       contenedor.style.display = "none";
       div_carrito.style.display = "";
+      quiero_mostrar_ultimo_titulo = false;
     } else {
       contenedor.style.display = "";
       div_carrito.style.display = "none";
+      quiero_mostrar_ultimo_titulo = true;
     }
     contador_prueba++;
     contador_2 = 0;
@@ -453,15 +498,19 @@ function vista_carrito() {
       ocultar_inicio();
       contenedor.style.display = "none";
       div_carrito.style.display = "";
+      quiero_mostrar_ultimo_titulo = false;
     } else {
-      mostrar_inicio();
+      mostrar_inicio_desde_visita_carrito();
       contenedor.style.display = "";
       div_carrito.style.display = "none";
+      quiero_mostrar_ultimo_titulo = false;
     }
     contador_2++;
   }
-
   mostrar_carrito();
+  if (quiero_mostrar_ultimo_titulo) {
+    titulo_productos(ultimo_titulo);
+  }
 }
 
 function cambiar_vista_carrito_con_navbar() {
@@ -608,6 +657,7 @@ function armar_html_para_alerta() {
   return string_para_html_alerta;
 }
 
+var precioTotalArmaTuPc = 0;
 function alerta_fin_arma_tu_pc() {
   for (
     let posicion_lista_componentes_elegidos = 0;
@@ -627,19 +677,55 @@ function alerta_fin_arma_tu_pc() {
     <div class="contenedor_de_alerta_arma_tu_pc">
     <img src="${imgSrc}" alt="Imagen del producto" style="width: 50px; height: 50px;">
     <p>${nombreProducto}</p>
-    <p>${precioProducto}</p>
+    <p>$${precioProducto}</p>
     </div>
     `;
+    precioTotalArmaTuPc += precioProducto;
   }
+  string_para_html_alerta =
+    string_para_html_alerta +
+    `
+<div class="contenedor_de_alerta_arma_tu_pc">
+<p>El precio de la Pc Armada es $${precioTotalArmaTuPc}</p>
+</div>
+`;
+  precioTotalArmaTuPc = 0;
 
+  // Swal.fire({
+  //   title: "Componentes elegidos",
+  //   html: string_para_html_alerta,
+  //   customClass: {
+  //     container: "alerta_arma_tu_pc_finalizada",
+  //   },
+  //   showCloseButton: true,
+  // });
+
+  //////////////////////////////
+  // function mostrarAlerta() {
   Swal.fire({
-    title: "Componentes elegidos",
+    title: "¿Qué desea hacer?",
     html: string_para_html_alerta,
     customClass: {
       container: "alerta_arma_tu_pc_finalizada",
     },
-    showCloseButton: true,
+    showCancelButton: true,
+    confirmButtonText: "Armar otra PC",
+    cancelButtonText: "Ir a pagar",
+    confirmButtonColor: "#8B0000 ",
+    cancelButtonColor: "#28a745",
+  }).then((result) => {
+    if (result.value) {
+      // Acción si se hace clic en "Armar otra PC"
+      console.log("Armar otra PC");
+    } else if (result.dismiss === Swal.DismissReason.cancel) {
+      // Acción si se hace clic en "Ir a pagar"
+      console.log("Ir a pagar");
+      la_tarjeta_fue_llamada_desde_carrito = false;
+      ingresar_tarjeta();
+    }
   });
+  // }
+
   //Con esto reseteo Armar tu Pc
   var navbar = document.querySelector(".nav-link");
   navbar.click();
@@ -686,4 +772,183 @@ function actualizar_animacion_titulo() {
   setTimeout(() => {
     elementoTexto.classList.add("tracking-in-expand");
   }, 50);
+}
+
+//NUEVOO
+function alerta_pago_efectuado() {
+  Swal.fire({
+    title: "Pago efectuado",
+    text: "Tu pago ha sido procesado exitosamente. Gracias por tu compra.",
+    icon: "success",
+    confirmButtonText: "Cerrar",
+    showCancelButton: false,
+    allowOutsideClick: false,
+  });
+}
+
+function vaciar_carrito() {
+  lista_carrito = [];
+  guardar_sesion(lista_carrito);
+  //falta actualizar carrito visual
+  mostrar_carrito();
+  //no se resetea el total
+  actualizar_total();
+}
+
+function ingresar_tarjeta() {
+  Swal.fire({
+    title: "Formulario de tarjeta de crédito",
+    html: `
+      <div class="container-tarjeta">
+        <div class="card-container">
+          <div class="front">
+            <div class="image">
+              <img src="imgs/tarjeta/chip.png" alt="" />
+              <img src="imgs/tarjeta/visa.png" alt="" />
+            </div>
+            <div class="card-number-box">####-####-####-####</div>
+            <div class="flexbox">
+              <div class="box">
+                <span>Propietario</span>
+                <div class="card-holder-name">Nombre Completo</div>
+              </div>
+              <div class="box">
+                <span>Fecha expiración</span>
+                <div class="expiration">
+                  <span class="exp-month">mm</span>
+                  <span class="exp-year">yy</span>
+                </div>
+              </div>
+            </div>
+          </div>
+  
+          <div class="back">
+            <div class="stripe"></div>
+            <div class="box">
+              <span>cvc</span>
+              <div class="cvv-box"></div>
+              <img src="image/visa.png" alt="" />
+            </div>
+          </div>
+        </div>
+  
+        <form action="">
+          <div class="inputBox">
+            <span>Numero de tarjeta</span>
+            <input type="text" maxlength="16" class="card-number-input" />
+          </div>
+          <div class="inputBox">
+            <span>Nombre del propietario</span>
+            <input type="text" class="card-holder-input" />
+          </div>
+          <div class="flexbox">
+            <div class="inputBox">
+              <span>Mes de expiracion</span>
+              <select name="" id="" class="month-input">
+                <option value="month" selected disabled>Mes</option>
+                <option value="01">01</option>
+                <option value="02">02</option>
+                <option value="03">03</option>
+                <option value="04">04</option>
+                <option value="05">05</option>
+                <option value="06">06</option>
+                <option value="07">07</option>
+                <option value="08">08</option>
+                <option value="09">09</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+              </select>
+            </div>
+            <div class="inputBox">
+              <span>Año de expiracion</span>
+              <select name="" id="" class="year-input">
+                <option value="year" selected disabled>Año</option>
+                <option value="2021">2021</option>
+                <option value="2022">2022</option>
+                <option value="2023">2023</option>
+                <option value="2024">2024</option>
+                <option value="2025">2025</option>
+                <option value="2026">2026</option>
+                <option value="2027">2027</option>
+                <option value="2028">2028</option>
+                <option value="2029">2029</option>
+                <option value="2030">2030</option>
+              </select>
+            </div>
+            <div class="inputBox">
+              <span>cvc</span>
+              <input type="text" maxlength="4" class="cvv-input" />
+            </div>
+          </div>
+          <input type="submit" value="Efectuar Pago" class="submit-btn" />
+        </form>
+      </div>
+    `,
+    showConfirmButton: false,
+  });
+  document.querySelector(".card-number-input").oninput = () => {
+    let numeros = document.querySelector(".card-number-input").value;
+    let string = "";
+    for (let pos = 0; pos < 16; pos++) {
+      console.log("POS actual");
+      console.log(pos);
+      if (pos % 4 == 0 && pos != 0) {
+        string = string + "-";
+      }
+
+      if (numeros.length <= pos) {
+        string = string + "#";
+      } else {
+        string = string + String(numeros[pos]);
+      }
+
+      document.querySelector(".card-number-box").innerText = `${string}`;
+    }
+  };
+
+  document.querySelector(".card-holder-input").oninput = () => {
+    document.querySelector(".card-holder-name").innerText =
+      document.querySelector(".card-holder-input").value;
+  };
+
+  document.querySelector(".month-input").oninput = () => {
+    document.querySelector(".exp-month").innerText =
+      document.querySelector(".month-input").value;
+  };
+
+  document.querySelector(".year-input").oninput = () => {
+    document.querySelector(".exp-year").innerText =
+      document.querySelector(".year-input").value;
+  };
+
+  document.querySelector(".cvv-input").onfocus = () => {
+    document.querySelector(".front").style.transform =
+      "perspective(1000px) rotateY(-180deg)";
+    document.querySelector(".back").style.transform =
+      "perspective(1000px) rotateY(0deg)";
+  };
+
+  document.querySelector(".cvv-input").onblur = () => {
+    document.querySelector(".front").style.transform =
+      "perspective(1000px) rotateY(0deg)";
+    document.querySelector(".back").style.transform =
+      "perspective(1000px) rotateY(180deg)";
+  };
+
+  document.querySelector(".cvv-input").oninput = () => {
+    document.querySelector(".cvv-box").innerText =
+      document.querySelector(".cvv-input").value;
+  };
+
+  //
+
+  const boton_efectuar_pago = document.querySelector(".submit-btn");
+  boton_efectuar_pago.addEventListener("click", () => {
+    //Tendria que validar los datos pero seria Demasiado
+    alerta_pago_efectuado();
+    if (la_tarjeta_fue_llamada_desde_carrito) {
+      vaciar_carrito();
+    }
+  });
 }

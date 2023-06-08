@@ -19,7 +19,8 @@
 
 .card img {
   width: 200px;
-  height: 200px;
+  // height: 200px;
+  height: 160px;
   object-fit: contain;
   margin-bottom: 20px;
 }
@@ -88,4 +89,18 @@
   padding: 40px;
 
   background-color: #007bff;
+}
+
+//
+.agregar-a-lista-componentes {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.agregar-a-lista-componentes:hover {
+  background-color: #0069d9;
 }
